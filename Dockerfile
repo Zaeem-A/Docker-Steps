@@ -1,23 +1,9 @@
-# Use the latest Node.js image from Docker Hub
-FROM node:latest
+# Use the official MySQL image from Docker Hub
+FROM mysql:latest
 
-# Set the working directory
-WORKDIR /backend/
+# Set the root password and database name
+ENV MYSQL_ROOT_PASSWORD=Deviljin1
+ENV MYSQL_DATABASE=Login
 
-# Copy package.json and package-lock.json
-COPY package*.json ./
-
-# Install dependencies
-RUN npm install
-
-# Copy the rest of the application code
-COPY . .
-
-# Copy the .env file to the working directory
-COPY .env .env
-
-# Expose the port the app runs on
-EXPOSE 4000
-
-# Start the application
-CMD ["npm", "start"]
+# Copy the SQL file into the container
+COPY db.sql /docker-entrypoint-initdb.d/
